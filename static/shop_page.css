@@ -1,0 +1,22 @@
+.size-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.size-btn {
+    border: 1px solid #000;
+    background: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+.add-btn {
+    width: 100%;
+}

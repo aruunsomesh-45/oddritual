@@ -1,0 +1,165 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}About | Odd Ritual{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'about.css' %}?v=6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block main_content %}
+    <!-- START: HERO SECTION -->
+    <section class="hero-one hero-one-reversed">
+        <div class="hero-right">
+            <h1 class="hero-h1">A MODERN EXPRESSION OF HERITAGE</h1>
+        </div>
+        <div class="hero-left">
+            <span class="hero-label">[ OUR NAME ]</span>
+            <p class="hero-about-p">
+                We named the brand after something everyone is familiar with, golfer or not: the small, personal habits we fall into when focus matters. The quiet club waggle before a shot. The couple of steps back to double-check alignment. The breath you take before committing. Everyone has their own weird little process. Their own weird routine they go through, their odd ritual. But it’s not just golf. The number of times a tennis player bounces the ball before serving, or the amount of steps a footballer takes before striking a penalty. These rituals, odd or otherwise, help us lock in. They’re how we prepare to perform. It even goes beyond sport. It’s your morning coffee routine, your lucky socks, the way you arrange your desk before starting work, or the carefully selected the playlist you jam to while designing, producing, creatively expressing yourself. The name might sound a bit out there, but it speaks to something deeply human: We are all creatures of habit/ritual.
+            </p>
+        </div>
+    </section>
+    <!-- END: HERO SECTION -->
+
+    <!-- START: HERITAGE PARALLAX SECTION -->
+    <section class="about-heritage-section" style="--bg-image: url({% static 'images/image.png' %});">
+        <div class="parallax-overlay"></div>
+        <div class="parallax-container">
+            <div class="parallax-item left">
+                <span class="parallax-label">CAPE TOWN</span>
+            </div>
+            <div class="parallax-item center">
+                <span class="parallax-label">A MODERN EXPRESSION <br> OF HERITAGE</span>
+            </div>
+            <div class="parallax-item right">
+                <span class="parallax-label">SOUTH AFRICA</span>
+            </div>
+        </div>
+    </section>
+    <!-- END: HERITAGE PARALLAX SECTION -->
+
+    <!-- START: SPLIT GRID SECTION -->
+    <section class="about-split-grid">
+        <div class="grid-left">
+            <img src="{% static 'images/image_copy.png' %}" alt="Heritage B&W">
+        </div>
+        <div class="grid-right" id="loop-container">
+            <div class="loop-inner">
+                <img src="{% static 'images/hover1.jpg' %}" class="loop-img active">
+                <img src="{% static 'images/hover2.jpg' %}" class="loop-img">
+                <img src="{% static 'images/hover3.jpg' %}" class="loop-img">
+                <img src="{% static 'images/Home_Gallery1.webp' %}" class="loop-img">
+                <img src="{% static 'images/Home_Gallery2.webp' %}" class="loop-img">
+                <img src="{% static 'images/Home_Gallery3.webp' %}" class="loop-img">
+                <img src="{% static 'images/Home_Gallery4.webp' %}" class="loop-img">
+                <img src="{% static 'images/Home_Gallery5.webp' %}" class="loop-img">
+            </div>
+        </div>
+    </section>
+    <!-- END: SPLIT GRID SECTION -->
+
+    <!-- START: OUR STORY SECTION -->
+    <section class="about-story-section reveal-on-scroll">
+        <div class="story-label-top">
+            <span class="story-label">( OUR STORY )</span>
+        </div>
+        
+        <div class="story-content-wrapper">
+            <div class="informations reveal-on-scroll">
+                <div class="info-heading">
+                    <h1>INFORMED BY TRADITION, WITHIN THE CONTEXT OF TODAY’S CULTURE, WE WANT TO HELP PUSH THE GAME OF GOLF INTO NEW ERA OF CREATIVITY.</h1>
+                </div>
+                <div class="info-grid">
+                    <div class="sub-one">
+                        <p>We started Odd Ritual because we couldn’t find a golf brand locally that spoke to us. We’ve always loved the game, but the culture around it felt stiff, narrow, and exclusionary. The gear looked like it belonged to someone else that didn’t feel too aligned with how we see the world.</p>
+                    </div>
+                    <div class="sub-two">
+                        <p>At the same time, our respect for golf runs deep. The discipline it demands. The attention to detail. The way it forces you to stay honest, stay patient, and stay in the moment. Golf is one of the few sports where a beginner and a tour pro can compete without anyone having to pull punches.</p>
+                    </div>
+                    <div class="sub-three">
+                        <p>That’s a rare kind of democracy and we think it's worth applying that principle to the culture and aesthetics surrounding the game as well.</p>
+                    </div>
+                    <div class="sub-four">
+                        <p>Odd Ritual is our way of building something new on the back of tradition. A brand for people who love the game but want to feel like themselves on the course. Less rigid, more real. We’re not trying to tear anything down — we’re just here to open the door a little wider.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END: OUR STORY SECTION -->
+
+    <!-- START: IMAGE ANIME SECTION -->
+    <section class="image-anime-section">
+        <div class="sticky-wrap">
+            
+            <!-- Image 1: Bottom Right -->
+            <div class="sticky-item is-1">
+                <div class="sticky-item_img">
+                    <img src="{% static 'images/Home_Gallery1.webp' %}" alt="Anime 1" class="img-fill">
+                </div>
+            </div>
+
+            <!-- Image 2: Top Center -->
+            <div class="sticky-item is-2">
+                <div class="sticky-item_img">
+                    <img src="{% static 'images/Home_Gallery2.webp' %}" alt="Anime 2" class="img-fill">
+                </div>
+            </div>
+
+            <!-- Image 3: Center Left -->
+            <div class="sticky-item is-3">
+                <div class="sticky-item_img">
+                    <img src="{% static 'images/Home_Gallery3.webp' %}" alt="Anime 3" class="img-fill">
+                </div>
+            </div>
+
+            <!-- Image 4: Bottom Center -->
+            <div class="sticky-item is-4">
+                <div class="sticky-item_img">
+                    <img src="{% static 'images/Home_Gallery5.webp' %}" alt="Anime 4" class="img-fill">
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- END: IMAGE ANIME SECTION -->
+{% endblock %}
+
+{% block footer %}
+    <!-- START: INDEX FOOTER -->
+    <footer class="index-footer">
+        <div class="index-header-row">
+            <div class="idx-col-site">SITE INDEX</div>
+            <div class="idx-col-nav">
+                <a href="{% url 'shop' %}">SHOP NOW</a>
+                <a href="{% url 'home' %}">HOME</a>
+                <a href="{% url 'about' %}">ABOUT US</a>
+                <a href="{% url 'contact' %}">CONTACT US</a>
+            </div>
+            <div class="idx-col-code">CODE</div>
+            <div class="idx-col-name">NAME</div>
+            <div class="idx-col-price">PRICE</div>
+        </div>
+
+        <div class="index-products-wrap">
+            {% for product in products %}
+            <a href="{% url 'product_detail' pid=product.product_id %}" class="idx-product-row">
+                <div class="idx-col-site"></div>
+                <div class="idx-col-nav relative-col">
+                    <img src="{{ product.main_image.url }}" class="idx-row-img" alt="product">
+                </div>
+                <div class="idx-col-code">({{ product.product_id }})</div>
+                <div class="idx-col-name">{{ product.name }} <span class="idx-arrow">→</span></div>
+                <div class="idx-col-price">R {{ product.price }}.00</div>
+            </a>
+            {% endfor %}
+        </div>
+        
+        <div class="index-footer-bottom">
+            <h1 class="idx-huge-text">SHOP NOW<br>EXPLORE OUR RANGE</h1>
+        </div>
+    </footer>
+    <!-- END: INDEX FOOTER -->
+{% endblock %}

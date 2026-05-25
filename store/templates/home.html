@@ -1,0 +1,346 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Odd Ritual | Golf Heritage{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Playfair+Display:italic,wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- GSAP for smooth interactions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+    {% if messages %}
+    <div class="messages-toast-container" id="messages-toast-container">
+        {% for message in messages %}
+        <div class="message-toast {{ message.tags }}">
+            <div class="toast-body">
+                <span class="toast-icon">
+                    {% if message.tags == 'success' %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    {% else %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    {% endif %}
+                </span>
+                <span class="toast-text">{{ message }}</span>
+            </div>
+            <button class="toast-close" onclick="closeToast(this)">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <header class="header-section">
+        <div class="header-sub-1">
+            <a href="{% url 'home' %}" class="logo-link">ODD RITUAL</a><span class="logo-trademark">TM</span>
+        </div>
+        <div class="header-sub-2 cursor-pointer" id="menu-toggle">
+            <div class="toggle-icon">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <span class="toggle-label">MENU</span>
+        </div>
+        <div class="header-sub-3">
+            <a href="{% url 'shop' %}" class="nav-link">SHOP NOW</a>
+            <a href="{% url 'cart_view' %}" class="nav-link">CART ({{ cart_count|default:"0" }})</a>
+        </div>
+    </header>
+
+    <!-- FULL-SCREEN EDITORIAL NAV OVERLAY -->
+    <div class="nav-overlay" id="nav-overlay">
+        <!-- Overlay Header with Close Action -->
+        <div class="overlay-header">
+            <div class="close-menu-btn" id="close-menu-toggle">
+                <span>CLOSE</span>
+                <div class="close-icon-lines"></div>
+            </div>
+        </div>
+
+        <!-- Main Navigation List -->
+        <div class="overlay-menu-list">
+            <a href="{% url 'home' %}" class="menu-item-link">
+                <span class="menu-item-number">01</span>HOME
+            </a>
+            <a href="{% url 'shop' %}" class="menu-item-link">
+                <span class="menu-item-number">02</span>SHOP
+            </a>
+            <a href="{% url 'about' %}" class="menu-item-link">
+                <span class="menu-item-number">03</span>ABOUT US
+            </a>
+            <a href="{% url 'contact' %}" class="menu-item-link">
+                <span class="menu-item-number">04</span>CONTACT US
+            </a>
+        </div>
+
+        <!-- Overlay Footer -->
+        <div class="overlay-footer">
+            <div class="overlay-footer-left">
+                <span>ODD RITUAL GOLF CLUB</span>
+                <span>A MODERN EXPRESSION OF HERITAGE</span>
+            </div>
+            <div class="overlay-footer-right">
+                <span>@ODDRITUAL</span>
+                <span>ORGC©2025 ALL RIGHTS RESERVED</span>
+            </div>
+        </div>
+    </div>
+
+    {% block main_content %}
+    <!-- HERO SECTION -->
+    <section class="hero-section hero-container">
+        <!-- Background Sub-container -->
+        <div class="hero-bg-container">
+            <img src="{% static 'images/herobg.png' %}" class="bg-layer layer-a" alt="Fashion Image">
+        </div>
+
+        <div class="hero-nav-indices">
+            <div class="nav-item-container">
+                <div class="nav-index-item" data-bg="{% static 'images/Home_Gallery1.webp' %}">01</div>
+                <div class="small-preview"><img src="{% static 'images/Home_Gallery1.webp' %}" alt="01"></div>
+            </div>
+            <div class="nav-item-container">
+                <div class="nav-index-item" data-bg="{% static 'images/Home_Gallery2.webp' %}">02</div>
+                <div class="small-preview"><img src="{% static 'images/Home_Gallery2.webp' %}" alt="02"></div>
+            </div>
+            <div class="nav-item-container">
+                <div class="nav-index-item" data-bg="{% static 'images/Home_Gallery3.webp' %}">03</div>
+                <div class="small-preview"><img src="{% static 'images/Home_Gallery3.webp' %}" alt="03"></div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <p class="hero-cta">SHOP NOW / EXPLORE OUR FIRST COLLECTION</p>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about-section reveal">
+        <div class="about-sub-1">
+            <img src="{% static 'images/illustration.png' %}" alt="Odd Ritual">
+        </div>
+        <div class="about-sub-2">
+            <p>Born from a shared love of the game, rooted in a vision of authenticity and creativity expressed through
+                what we wear. For us, it’s about the good times, on and off the course, self-expression, and an
+                appreciation for the cultural overlaps we get to experience along the way.</p>
+        </div>
+    </section>
+
+    <!-- FEATURED MARQUEE -->
+    <section class="featured-section reveal">
+        <h2 class="section-title">( FEATURED PRODUCTS )</h2>
+        <div class="marquee-container">
+            <div class="marquee-track">
+                {% for product in products %}
+                <a href="{% url 'product_detail' product.product_id %}" class="featured-card product-card">
+                    <img src="{{ product.main_image.url }}" alt="{{ product.name }}" class="image-main">
+                    <img src="{{ product.hover_image.url }}" alt="{{ product.name }} Hover" class="image-hover">
+
+                    <div class="product-details">
+                        <div class="details-inner">
+                            <span class="product-category">CORE COLLECTION 24/25</span>
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <p class="product-id">({{ product.product_id }})</p>
+                            <div class="price-row">
+                                <span class="price">R:{{ product.price }}</span>
+                                <span class="arrow">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                <!-- Loop set -->
+                {% for product in products %}
+                <a href="{% url 'product_detail' product.product_id %}" class="featured-card product-card">
+                    <img src="{{ product.main_image.url }}" alt="{{ product.name }}" class="image-main">
+                    <img src="{{ product.hover_image.url }}" alt="{{ product.name }} Hover" class="image-hover">
+
+                    <div class="product-details">
+                        <div class="details-inner">
+                            <span class="product-category">CORE COLLECTION 24/25</span>
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <p class="product-id">({{ product.product_id }})</p>
+                            <div class="price-row">
+                                <span class="price">R:{{ product.price }}</span>
+                                <span class="arrow">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="view-more-container">
+                <a href="{% url 'shop' %}" class="view-more-btn">VIEW MORE PRODUCTS <span class="arrow">→</span></a>
+            </div>
+    </section>
+
+    <!-- MEGA SECTION (EDITORIAL GRID) -->
+    <section class="mega-section reveal">
+        <!-- Labels Row: Kept separate to ensure they align in a straight line -->
+        <div class="labels-container">
+            <div class="label-col col-40">OUR PRODUCTS</div>
+            <div class="label-col col-30">OUR STORY</div>
+            <div class="label-col col-30">OUR COMMUNITY</div>
+        </div>
+
+        <!-- Images Row -->
+        <div class="images-container">
+            <div class="image-wrapper col-40 h-80">
+                <img src="{% static 'images/Home_Gallery1.webp' %}" alt="Products">
+                <div class="hover-follow">( SHOP NOW )</div>
+            </div>
+            <div class="image-wrapper col-30 h-40">
+                <img src="{% static 'images/Home_Gallery2.webp' %}" alt="Story">
+                <div class="hover-follow">( READ MORE )</div>
+            </div>
+            <div class="image-wrapper col-30 h-50">
+                <img src="{% static 'images/Home_Gallery3.webp' %}" alt="Community">
+                <div class="hover-follow">( JOIN US )</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HERITAGE SECTION -->
+    <section class="heritage-small reveal">
+        <span class="heritage-tag">ORGC©2025 DESIGNED AND MADE LOCALLY</span>
+        <div class="heritage-content">
+            <span class="h-col-side">CAPE TOWN</span>
+            <p class="h-col-center">OUR COUNTRY IS RICH IN CULTURE, DIVERSITY, AND HERITAGE — PRODUCING LOCALLY IS HOW
+                WE CARRY HOME WITH US, WHEREVER WE GO. MADE FOR US. BY US.</p>
+            <span class="h-col-side">SOUTH AFRICA</span>
+        </div>
+    </section>
+
+    <!-- DYNAMIC CYCLE -->
+    <section class="dynamic-cycle" id="dynamic-trigger">
+        <div class="cycle-bg" id="cycle-target"></div>
+    </section>
+
+    <!-- MORE THAN JUST GOLF -->
+    <section class="mtjg-section reveal">
+        <h1 class="mtjg-title">MORE THAN<br>JUST GOLF</h1>
+        <div class="mtjg-content">
+            <div class="mtjg-right">
+                <span class="mtjg-label">GIVING BACK</span>
+                <p class="mtjg-p">We never set out to be just a golf brand. Odd Ritual is as much about culture as it is
+                    about the game — and part of that is showing up for the communities we belong to. From day one,
+                    we’ve believed in using the platform we’re building to give back. That means supporting local
+                    initiatives, collaborating with purpose-led partners, and investing in the kind of change that
+                    outlives a single round of golf.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY GRID -->
+     {% for item in community %}
+    <section class="community-grid reveal">
+        <div class="com-row">
+            <div class="com-col-1"><a href="{{ item.link }}" target="_blank" class="inherit-link">[ VIEW WEBSITE ]</a></div>
+            <div class="com-col-2">
+                <h2 class="com-title">{{ item.name }}</h2>
+                <p class="com-p">{{ item.description }}</p>
+            </div>
+            <div class="com-col-3">
+                <img src="{{ item.image.url }}" class="com-img">
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+
+    {% endblock %}
+
+    {% block footer %}
+    <section class="editorial-footer">
+        <!-- LEFT BRAND AREA -->
+        <div class="brand-column">
+            <div class="footer-brand-images">
+                <img src="{% static 'images/stars.png' %}" class="footer-brand-img stars" alt="Stars">
+                <img src="{% static 'images/bird.png' %}" class="footer-brand-img bird" alt="Bird">
+                <img src="{% static 'images/monogram_footer.png' %}" class="footer-brand-img monogram" alt="Monogram">
+            </div>
+        </div>
+
+        <!-- CENTER TEXT -->
+        <div class="hero-copy">
+            <h1>
+                ODD RITUAL GOLF CLUB<br />
+                A MODERN EXPRESSION OF HERITAGE
+            </h1>
+        </div>
+
+        <!-- RIGHT FORM -->
+        <div class="newsletter-column">
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="input-line">
+                    <input type="text" name="name" placeholder="NAME SURNAME" required />
+                </div>
+                <div class="input-line">
+                    <input type="email" name="email" placeholder="EMAIL" required />
+                </div>
+                <button type="submit">SUBMIT</button>
+            </form>
+        </div>
+
+        <!-- BOTTOM FOOTER GRID -->
+        <div class="footer-grid">
+            <!-- SITE INDEX -->
+            <div class="footer-block">
+                <h3>SITE INDEX</h3>
+                <ul>
+                    <li><a href="{% url 'shop' %}" class="inherit-link">SHOP NOW</a></li>
+                    <li><a href="{% url 'home' %}" class="inherit-link">HOME</a></li>
+                    <li><a href="{% url 'about' %}" class="inherit-link">ABOUT US</a></li>
+                    <li><a href="{% url 'contact' %}" class="inherit-link">CONTACT US</a></li>
+                </ul>
+            </div>
+
+            <!-- SOCIAL -->
+            <div class="footer-block">
+                <h3>SOCIAL</h3>
+                <ul>
+                    <li>INSTAGRAM</li>
+                </ul>
+            </div>
+
+            <!-- GET IN TOUCH -->
+            <div class="footer-block">
+                <h3>GET IN TOUCH</h3>
+                <ul>
+                    <li>HELLO@ODDRITUALGOLF.COM</li>
+                    <li>+27 76 207 33 87</li>
+                </ul>
+            </div>
+
+            <!-- LEGAL -->
+            <div class="footer-block">
+                <h3>LEGAL</h3>
+                <ul>
+                    <li>PRIVACY POLICY</li>
+                    <li>REFUNDS</li>
+                    <li>SHIPPING</li>
+                    <li>TERMS OF SERVICE</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom-row">
+            <p>ALL RIGHTS RESERVED _ ORGC&copy;2025</p>
+            <p>WEBSITE BY MALVAH</p>
+        </div>
+    </section>
+    {% endblock %}
+
+    <script src="{% static 'odd.js' %}"></script>
+    <script src="{% static 'home.js' %}"></script>
+</body>
+
+</html>

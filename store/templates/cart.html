@@ -1,0 +1,115 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Cart | Odd Ritual{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cart.css' %}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+{% endblock %}
+
+{% block main_content %}
+<main class="cart-container">
+
+    <!-- PAGE HEADER -->
+    <div class="cart-header-block">
+        <span class="cart-label">[ YOUR CART ]</span>
+        <h1 class="cart-title">SHOPPING BAG</h1>
+        <a href="{% url 'shop' %}" class="cart-continue-link">← CONTINUE SHOPPING</a>
+    </div>
+
+    <!-- CART LAYOUT: ITEMS LEFT, SUMMARY RIGHT -->
+    <div class="cart-layout">
+
+        <!-- LEFT: ITEM LIST -->
+        <div class="cart-items-col">
+            {% for item in items %}
+            <div class="cart-item-card">
+
+                <!-- PRODUCT IMAGE -->
+                <a href="{% url 'product_detail' item.product_id %}" class="cart-img-wrap">
+                    <img src="{{ item.product_image }}" alt="{{ item.product_name }}" class="cart-img">
+                </a>
+
+                <!-- PRODUCT INFO -->
+                <div class="cart-item-info">
+                    <span class="cart-item-pid">{{ item.product_id }}</span>
+                    <h3 class="cart-item-name">{{ item.product_name }}</h3>
+                    <div class="cart-item-meta">
+                        <span class="cart-meta-tag">SIZE — {{ item.size|upper }}</span>
+                        <div class="cart-qty-control">
+                            <button type="button" class="qty-btn minus" data-item-id="{{ item.id }}">−</button>
+                            <span class="qty-value">{{ item.quantity }}</span>
+                            <button type="button" class="qty-btn plus" data-item-id="{{ item.id }}">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-bottom">
+                        <span class="cart-item-price">R {{ item.subtotal }}.00</span>
+                        <a href="{% url 'remove_from_cart' item.id %}" class="cart-remove-btn">REMOVE ✕</a>
+                    </div>
+                </div>
+
+            </div>
+            {% empty %}
+            <!-- EMPTY STATE — naturally renders when the loop has zero items -->
+            <div class="cart-empty-state">
+                <p class="cart-empty-title">YOUR BAG IS EMPTY</p>
+                <p class="cart-empty-sub">Looks like you haven't added anything to your cart yet.</p>
+                <a href="{% url 'shop' %}" class="cart-shop-btn">SHOP NOW →</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY (Visibility managed dynamically via CSS/JS depending on empty state) -->
+        <div class="cart-summary-col">
+            <div class="cart-summary-box">
+                <h2 class="cart-summary-title">ORDER SUMMARY</h2>
+
+                <div class="cart-summary-lines">
+                    {% for item in items %}
+                    <div class="cart-summary-line">
+                        <span>{{ item.product_name }} (×{{ item.quantity }})</span>
+                        <span>R {{ item.subtotal }}.00</span>
+                    </div>
+                    {% empty %}
+                    <!-- Will naturally stay blank if no items -->
+                    {% endfor %}
+                </div>
+
+                <div class="cart-summary-total">
+                    <span>TOTAL</span>
+                    <span>R {{ total }}.00</span>
+                </div>
+
+                <button class="cart-checkout-btn">PROCEED TO CHECKOUT →</button>
+            </div>
+        </div>
+
+    </div><!-- end .cart-layout -->
+
+    <!-- SHIPPING & CONTACT DETAILS MODAL -->
+    <div id="shippingModal" class="shipping-modal-overlay">
+        <div class="shipping-modal-content">
+            <button id="closeModalBtn" type="button" class="shipping-modal-close">✕</button>
+            <h2 class="shipping-modal-title">SHIPPING DETAILS</h2>
+
+            <form id="shippingForm" class="shipping-form">
+                <input type="text" id="name-input" name="name" placeholder="Full Name" required class="shipping-form-input">
+                <input type="email" id="email-input" name="email" placeholder="Email Address" required class="shipping-form-input">
+                <input type="tel" id="phone-input" name="phone" placeholder="Phone Number" required class="shipping-form-input">
+                <textarea id="address-input" name="address" placeholder="Complete Shipping Address" required class="shipping-form-textarea"></textarea>
+
+                <button type="submit" id="confirmPayBtn" class="shipping-form-submit">CONFIRM DETAILS & PAY</button>
+            </form>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    window.csrfToken = "{{ csrf_token }}";
+</script>
+<script src="{% static 'cart.js' %}"></script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Shop | Odd Ritual{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'p_detail.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'shop.css' %}">
+{% endblock %}
+
+{% block main_content %}
+    <div class="shop-container">
+        <h1 class="shop-title">SHOP ALL PRODUCTS</h1>
+        
+        <div class="shop-grid">
+            {% for product in products %}
+            <a href="{% url 'product_detail' product.product_id %}" class="featured-card product-card">
+                <img src="{{ product.main_image.url }}" alt="{{ product.name }}" class="image-main">
+                <img src="{{ product.hover_image.url }}" alt="{{ product.name }} Hover" class="image-hover">
+
+                <div class="product-details">
+                    <div class="details-inner">
+                        <span class="product-category">CORE COLLECTION 24/25</span>
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <p class="product-id">({{ product.product_id }})</p>
+                        <div class="price-row">
+                            <span class="price">R:{{ product.price }}</span>
+                            <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <!-- START: INDEX FOOTER -->
+    <footer class="index-footer">
+        <div class="index-header-row">
+            <div class="idx-col-site">SITE INDEX</div>
+            <div class="idx-col-nav">
+                <a href="{% url 'shop' %}">SHOP NOW</a>
+                <a href="{% url 'home' %}">HOME</a>
+                <a href="{% url 'about' %}">ABOUT US</a>
+                <a href="{% url 'contact' %}">CONTACT US</a>
+            </div>
+            <div class="idx-col-code">CODE</div>
+            <div class="idx-col-name">NAME</div>
+            <div class="idx-col-price">PRICE</div>
+        </div>
+
+        <div class="index-products-wrap">
+            {% for product in products %}
+            <a href="{% url 'product_detail' pid=product.product_id %}" class="idx-product-row">
+                <div class="idx-col-site"></div>
+                <div class="idx-col-nav relative-col">
+                    <img src="{{ product.main_image.url }}" class="idx-row-img" alt="product">
+                </div>
+                <div class="idx-col-code">({{ product.product_id }})</div>
+                <div class="idx-col-name">{{ product.name }} <span class="idx-arrow">→</span></div>
+                <div class="idx-col-price">R {{ product.price }}.00</div>
+            </a>
+            {% endfor %}
+        </div>
+        
+        <div class="index-footer-bottom">
+            <h1 class="idx-huge-text">SHOP NOW<br>EXPLORE OUR RANGE</h1>
+        </div>
+    </footer>
+    <!-- END: INDEX FOOTER -->
+{% endblock %}

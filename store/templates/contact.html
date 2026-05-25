@@ -1,0 +1,62 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Contact | Odd Ritual{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'contact.css' %}?v=1">
+{% endblock %}
+
+{% block main_content %}
+    <main class="contact-container">
+        <!-- LEFT 50% SCROLLABLE GALLERY -->
+        <section class="contact-left">
+            <div class="gallery-scroll-wrap">
+                <img src="{% static 'images/Our_Products.webp' %}" alt="Odd Ritual Product" class="gallery-img">
+                <img src="{% static 'images/Home_Gallery1.webp' %}" alt="Odd Ritual Editorial 1" class="gallery-img">
+                <img src="{% static 'images/Home_Gallery5.webp' %}" alt="Odd Ritual Editorial 2" class="gallery-img">
+            </div>
+        </section>
+
+        <!-- RIGHT 50% FIXED CONTENT -->
+        <section class="contact-right">
+            <div class="info-content-wrap">
+                <span class="contact-label">[ SAY HELLO ]</span>
+                <h1 class="contact-title">GET IN TOUCH</h1>
+                <p class="contact-subtitle">INQUIRIES, CUSTOMER SERVICE, OR JUST A CHAT OFF THE COURSE.</p>
+
+                <div class="contact-details-grid">
+                    <div class="detail-block">
+                        <h4>GENERAL INQUIRIES</h4>
+                        <a href="mailto:hello@oddritualgolf.com">HELLO@ODDRITUALGOLF.COM</a>
+                    </div>
+                    <div class="detail-block">
+                        <h4>TELEPHONE</h4>
+                        <a href="tel:+27762073387">+27 76 207 33 87</a>
+                    </div>
+                    <div class="detail-block">
+                        <h4>HEADQUARTERS</h4>
+                        <p>188 LOOP STREET, CAPE TOWN, 8001</p>
+                    </div>
+                </div>
+
+                <!-- CONTACT FORM -->
+                <form class="contact-form" method="POST" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="name" required placeholder="YOUR NAME">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" required placeholder="YOUR EMAIL">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" required rows="4" placeholder="HOW CAN WE HELP?"></textarea>
+                    </div>
+                    <button type="submit" class="contact-submit-btn">SEND MESSAGE <span class="arrow">→</span></button>
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+{% block footer %}{% endblock %}

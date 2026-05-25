@@ -1,0 +1,421 @@
+/* p_detail.css - Luxury Editorial PDP */
+
+:root {
+    --bg-color: #F2F2F2;
+    --text-color: #000000;
+    --accent-blue: #0000FF;
+    --font-main: 'Space Grotesk', sans-serif; /* Bold Sans-Serif */
+    --font-label: 'Playfair Display', serif; /* Serif for labels */
+    --transition-standard: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    --transition-slow: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+}
+
+.pdp-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* 60% Left Section - Scrollable Gallery */
+.gallery-section {
+    width: 60%;
+    padding: 6vw 8vw;
+    display: flex;
+    flex-direction: column;
+    gap: 4vw;
+}
+
+.primary-image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.secondary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2vw;
+}
+
+.grid-image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.detail-image-wrapper {
+    width: 100%;
+    overflow: hidden;
+    background-color: #ddd;
+    margin-bottom: 2vw;
+}
+
+.gallery-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(90%);
+    transition: var(--transition-slow);
+}
+
+.gallery-section img:hover {
+    filter: grayscale(0%) brightness(100%);
+    transform: scale(1.1);
+}
+
+/* 40% Right Section - Sticky Content */
+.content-section {
+    width: 40%;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 10vh 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.product-info h1 {
+    font-size: 1.2rem; /* Updated to 1.2rem */
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.product-header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 1rem;
+}
+
+.product-price {
+    font-size: 1.2rem; /* Updated to 1.2rem */
+    font-weight: 400;
+    margin: 0;
+}
+
+.product-description {
+    font-size: 1rem; /* Updated to 1rem */
+    line-height: 1.5;
+    margin-bottom: 3rem;
+    max-width: 100%;
+    opacity: 0.8;
+}
+
+.toggle-header h3 {
+    font-size: 1.2rem; /* Updated to 1.2rem */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.toggle-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    padding-top: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.7;
+}
+
+.toggle-item {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 1.5rem 0;
+}
+
+.toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-icon {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    transition: var(--transition-standard);
+}
+
+.toggle-icon::before, .toggle-icon::after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.toggle-icon::before {
+    width: 100%;
+    height: 1px;
+}
+
+.toggle-icon::after {
+    width: 1px;
+    height: 100%;
+}
+
+.toggle-item.active .toggle-icon {
+    transform: rotate(45deg);
+}
+
+.toggle-item.active .toggle-content {
+    max-height: 500px;
+    padding-top: 1rem;
+}
+
+/* Image Alignment and Borders */
+.gallery-section img {
+    width: 100%;
+    height: 100%;
+    display: block; /* Ensure no extra space at bottom */
+    object-fit: cover; /* Hyper-realistic coverage */
+    border: 1.5px solid #000; /* Slightly thicker vibrant border */
+    filter: grayscale(100%) brightness(90%);
+    transition: var(--transition-slow);
+}
+
+/* Carousel Section - Replicated from Home for consistency */
+.dynamic-carousel {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    margin-top: 15vw;
+    background-color: #000;
+    cursor: pointer;
+}
+
+.cycle-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.5s ease;
+    opacity: 1;
+}
+
+.cycle-bg.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+}
+
+/* CTA Buttons Styling */
+.cta-group {
+    margin-top: auto;
+    display: flex;
+    flex-direction: row; /* Aligned side-by-side */
+    gap: 5%; /* 5% gap as requested */
+    width: 100%;
+}
+
+.size-btn {
+    width: 47.5%; /* Calculated to allow for gap */
+    padding: 1.2rem;
+    background: transparent;
+    border: 1px solid #000;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.add-btn {
+    width: 47.5%; /* Calculated to allow for gap */
+    padding: 1.2rem;
+    background: #000;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: var(--transition-standard);
+}
+
+.add-btn:hover {
+    background-color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+/* Spacing between toggle sections */
+.toggles-container {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toggle-item {
+    background: rgba(255,255,255,0.3); /* Subtle background for distinction */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: var(--transition-standard);
+}
+
+.toggle-item.active {
+    margin-bottom: 2rem;
+}
+
+/* Header/Nav overlay for PDP */
+.pdp-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 5vw;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1000;
+    mix-blend-mode: difference;
+    color: #fff;
+}
+
+.pdp-nav .logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: lowercase;
+}
+
+@media (max-width: 1024px) {
+    .pdp-container {
+        flex-direction: column;
+    }
+    .gallery-section, .content-section {
+        width: 100%;
+    }
+    .content-section {
+        height: auto;
+        position: relative;
+        padding: 5vh 5vw;
+    }
+}
+
+/* INDEX FOOTER */
+.index-footer {
+    background-color: #000;
+    color: #fff;
+    padding: 100px 5% 50px;
+    font-family: 'Inter', sans-serif;
+}
+
+.index-header-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr 5fr 1.5fr;
+    gap: 20px;
+    padding-bottom: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.idx-col-nav a {
+    display: block;
+    color: #888;
+    text-decoration: none;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.idx-col-nav a:hover {
+    color: #fff;
+}
+
+.idx-col-price {
+    text-align: right;
+}
+
+.index-products-wrap {
+    margin-top: 40px;
+}
+
+.idx-product-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr 5fr 1.5fr;
+    gap: 20px;
+    padding: 6px 0;
+    text-decoration: none;
+    color: #888;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: color 0.2s ease;
+    align-items: center;
+}
+
+.idx-product-row:hover {
+    color: #0000ff;
+}
+
+.idx-arrow {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-left: 10px;
+    color: #0000ff;
+}
+
+.idx-product-row:hover .idx-arrow {
+    opacity: 1;
+}
+
+.idx-row-img {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 120px;
+    height: 150px;
+    object-fit: cover;
+    background-color: #f9f9f9;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+}
+
+.idx-product-row:hover .idx-row-img {
+    opacity: 1;
+}
+
+.index-footer-bottom {
+    margin-top: 100px;
+    padding-bottom: 50px;
+}
+
+.idx-huge-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 5vw;
+    line-height: 1;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+    .index-header-row, .idx-product-row {
+        grid-template-columns: 1fr 1fr 2fr 3fr 1fr;
+    }
+    .idx-row-img {
+        width: 100px;
+        height: 120px;
+    }
+}

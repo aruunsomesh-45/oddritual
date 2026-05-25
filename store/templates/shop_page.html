@@ -1,0 +1,102 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}{{ product.product_name }} | Odd Ritual{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'p_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'shop_page.css' %}">
+{% endblock %}
+
+{% block main_content %}
+    <main class="pdp-container">
+        <!-- 60% SCROLLABLE GALLERY -->
+        <section class="gallery-section">
+            <div class="primary-image-wrapper">
+                <img src="{{ product.product_image1.url }}" alt="{{ product.product_name }}">
+            </div>
+
+            <div class="secondary-grid">
+                <div class="grid-image-wrapper">
+                    <img src="{{ product.product_image2.url }}" alt="Detail 1">
+                </div>
+                <div class="grid-image-wrapper">
+                    <img src="{{ product.product_image3.url }}" alt="Detail 2">
+                </div>
+                <div class="grid-image-wrapper">
+                    <img src="{{ product.product_image4.url }}" alt="Detail 3">
+                </div>
+                <div class="grid-image-wrapper">
+                    <img src="{{ product.product_image5.url }}" alt="Detail 4">
+                </div>
+            </div>
+        </section>
+
+        <!-- 40% STICKY CONTENT -->
+        <section class="content-section">
+            <div class="product-info">
+                <span class="product-label">NEW COLLECTION / {{ product.product_id }}</span>
+                
+                <div class="product-header-block">
+                    <h1>{{ product.product_name }}</h1>
+                    <p class="product-price">R:{{ product.price }}</p>
+                </div>
+                
+                <div class="product-description">
+                    {{ product.product_decription|linebreaks }}
+                </div>
+
+                <div class="toggles-container">
+                    <!-- GARMENT DETAILS -->
+                    <div class="toggle-item">
+                        <div class="toggle-header" onclick="toggleSection(this)">
+                            <h3>GARMENT DETAILS</h3>
+                            <div class="toggle-icon"></div>
+                        </div>
+                        <div class="toggle-content">
+                            {{ product.garment_details|linebreaks }}
+                        </div>
+                    </div>
+
+                    <!-- WASH CARE -->
+                    <div class="toggle-item">
+                        <div class="toggle-header" onclick="toggleSection(this)">
+                            <h3>WASH CARE</h3>
+                            <div class="toggle-icon"></div>
+                        </div>
+                        <div class="toggle-content">
+                            {{ product.washcare|linebreaks }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIZE SELECTOR -->
+                <div class="size-selector" id="size-selector">
+                    <button type="button" class="size-btn" data-size="S">S</button>
+                    <button type="button" class="size-btn" data-size="M">M</button>
+                    <button type="button" class="size-btn" data-size="L">L</button>
+                    <button type="button" class="size-btn" data-size="XL">XL</button>
+                </div>
+
+                <!-- ADD TO CART FORM -->
+                <form method="POST" action="{% url 'add_to_cart' product.product_id %}" id="add-cart-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="size" id="selected-size" value="">
+                    <div class="cta-group">
+                        <button type="submit" class="add-btn" id="add-to-cart-btn">ADD TO CART</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- FULL WIDTH DYNAMIC CAROUSEL SECTION -->
+    <section class="dynamic-carousel pdp-dynamic-cycle" id="pdp-cycle-trigger">
+        <div class="cycle-bg pdp-cycle-bg" id="pdp-cycle-target" 
+             style="background-image: url('{{ product.product_image5.url }}');"
+             data-images="{{ product.product_image5.url }},{{ product.product_image6.url }},{{ product.product_image7.url }},{{ product.product_image8.url }},{{ product.product_image9.url }}">
+        </div>
+    </section>
+
+{% endblock %}
