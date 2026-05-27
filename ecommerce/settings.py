@@ -28,7 +28,9 @@ if os.path.exists(env_path):
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-y51^kaytzqy*+xel6*v#-ln6p(kdx6kudaaa@r(_kf(02%@onv')
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY or SECRET_KEY.strip() == '':
+    SECRET_KEY = 'django-insecure-y51^kaytzqy*+xel6*v#-ln6p(kdx6kudaaa@r(_kf(02%@onv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
@@ -37,6 +39,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 if os.getenv('VERCEL_URL'):
     ALLOWED_HOSTS.append(os.getenv('VERCEL_URL'))
     ALLOWED_HOSTS.append('.vercel.app')
+
 
 
 # Application definition
@@ -93,15 +96,70 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
+import logging
+from urllib.parse import urlparse
+
+logger = logging.getLogger(__name__)
+
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 db_url = os.environ.get('DATABASE_URL')
-if not db_url or db_url.strip() == "":
-    db_url = 'sqlite:///db.sqlite3'
 
-DATABASES = {
-    'default': dj_database_url.parse(db_url)
-}
+# Check if we are running on Vercel (where filesystem is read-only)
+IS_VERCEL = os.getenv('VERCEL') == '1' or os.getenv('VERCEL_URL') is not None
+SQLITE_FALLBACK_PATH = '/tmp/db.sqlite3' if IS_VERCEL else 'db.sqlite3'
+SQLITE_FALLBACK_URL = f'sqlite:///{SQLITE_FALLBACK_PATH}'
+
+def validate_and_parse_db_url(url):
+    """
+    Validates the database URL, masks credentials for safe logging,
+    and returns a parsed configuration or falls back to SQLite gracefully.
+    """
+    if not url or not url.strip():
+        logger.warning(f"DATABASE_URL is not set or is empty. Falling back to SQLite ({SQLITE_FALLBACK_PATH}).")
+        return SQLITE_FALLBACK_URL
+    
+    try:
+        parsed = urlparse(url)
+        # Mask password in URL for secure logging
+        masked_url = url
+        if parsed.password:
+            masked_url = url.replace(parsed.password, "********")
+            
+        if parsed.scheme not in ('postgres', 'postgresql', 'sqlite'):
+            logger.error(
+                f"Unsupported database scheme '{parsed.scheme}' in DATABASE_URL: {masked_url}. "
+                f"Only PostgreSQL and SQLite are supported. Falling back to SQLite ({SQLITE_FALLBACK_PATH})."
+            )
+            return SQLITE_FALLBACK_URL
+            
+        logger.info(f"Database connection URL validated: {masked_url}")
+        return url
+    except Exception as e:
+        logger.error(f"Error parsing DATABASE_URL: {str(e)}. Falling back to SQLite ({SQLITE_FALLBACK_PATH}).")
+        return SQLITE_FALLBACK_URL
+
+# Securely validate the database URL
+db_url_validated = validate_and_parse_db_url(db_url)
+
+try:
+    DATABASES = {
+        'default': dj_database_url.parse(db_url_validated)
+    }
+except Exception as e:
+    logger.critical(
+        f"Failed to parse database configuration using dj_database_url: {str(e)}. "
+        f"Falling back to emergency SQLite database ({SQLITE_FALLBACK_PATH}) to prevent application crash."
+    )
+    DATABASES = {
+        'default': dj_database_url.parse(SQLITE_FALLBACK_URL)
+    }
+
+# SECURITY & PRIVILEGE COMPLIANCE NOTE:
+# - Ensure that the database user configured in DATABASE_URL has limited permissions (least privilege).
+# - Do not use the superuser account (e.g. postgres) for daily application operations in production.
+# - Keep credentials stored securely in the environment (.env) and never hardcode them in version control.
+
 
 
 
@@ -153,10 +211,14 @@ RAZORPAY_KEY_SECRET = env('RAZORPAY_KEY_SECRET', default='')
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
 
-# Enforce HTTPS
+# Disable all HTTPS/SSL Redirection and HSTS for local development
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
