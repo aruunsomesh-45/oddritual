@@ -95,8 +95,12 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+db_url = os.environ.get('DATABASE_URL')
+if not db_url or db_url.strip() == "":
+    db_url = 'sqlite:///db.sqlite3'
+
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'))
+    'default': dj_database_url.parse(db_url)
 }
 
 
