@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:8000",
+  "backendAuthType": "public",
+  "executionArgs": {
+    "projectName": "ecommerce",
+    "projectPath": "c:\\Users\\aruun\\OneDrive\\Desktop\\odd ritual\\ecommerce",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-4a6lrMJho_ExGVC0lJTaI2sOdRTZAu2i1DdAXWlbBf-7PGSfrOS3ug7q6O0f7XS1d4VSr3FV7BsImGWmgWQ8XfvFZhspRFIbjaocm0aHSILtP_jOasLAtZcD-DT6ZIzoRio"
+    }
+  },
+  "serverPort": 61721
+}

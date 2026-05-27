@@ -13,7 +13,7 @@ class Razorpay_order(models.Model):
         return f"{self.order_id} | {self.paid}"   
 class invoice(models.Model):
     razorpay_order=models.OneToOneField(Razorpay_order, on_delete=models.CASCADE, null=True, blank=True)
-    invioce_id=models.CharField(max_length=100, unique=True, default="PENDING")
+    invoice_id=models.CharField(max_length=100, unique=True, default="PENDING")
     # multiple product details from product table
     products=models.ManyToManyField('store.shop_page', blank=True)
     customername=models.CharField(max_length=100, default="Unknown")
@@ -24,7 +24,7 @@ class invoice(models.Model):
     payment_status=models.CharField(max_length=100)
     created_at=models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"{self.invioce_id}-{self.customername}"
+        return f"{self.invoice_id}-{self.customername}"
     
     
 

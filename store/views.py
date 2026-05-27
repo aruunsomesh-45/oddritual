@@ -1,16 +1,22 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from .models import home_product,contactform, community,shop_page, CartItem
 from .forms import ContactForm
 
 # this for home page url and contact form submission
 def home(request):
     if request.method=='POST':
-        name=request.POST.get('name')
-        email=request.POST.get('email')
+        name=request.POST.get('name', '').strip()
+        email=request.POST.get('email', '').strip()
         if name and email:
-            contactform.objects.create(name=name,email=email)
-            messages.success(request, "Thank you for subscribing to our newsletter!")
+            try:
+                validate_email(email)
+                contactform.objects.create(name=name,email=email)
+                messages.success(request, "Thank you for subscribing to our newsletter!")
+            except ValidationError:
+                messages.error(request, "Please enter a valid email address.")
         return redirect("home")
             
 
